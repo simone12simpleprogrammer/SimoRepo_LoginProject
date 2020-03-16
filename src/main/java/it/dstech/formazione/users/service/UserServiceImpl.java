@@ -3,7 +3,10 @@ package it.dstech.formazione.users.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.dstech.formazione.users.model.User;
@@ -14,6 +17,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	 
 
 	public List<User> findAll() {
 

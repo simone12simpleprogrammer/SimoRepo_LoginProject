@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import groovyjarjarpicocli.CommandLine.Model;
 import it.dstech.formazione.users.model.User;
 import it.dstech.formazione.users.service.UserService;
 
@@ -20,8 +21,9 @@ public class MyUserController {
 	private UserService userService;
 
 	@PostMapping("/user")
-	public void addUser(@RequestBody User user) {
+	public String addUser(@RequestBody User user) {
 		userService.add(user);
+		return "registerOk";
 	}
 
 	@GetMapping("/users")

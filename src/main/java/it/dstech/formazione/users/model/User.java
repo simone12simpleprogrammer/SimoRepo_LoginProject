@@ -1,7 +1,6 @@
 package it.dstech.formazione.users.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,10 +18,37 @@ public class User {
 
 	private String username;
 
-	private String email;
-	@JsonFormat(pattern = "yyyy-MM-dd")
+	private String password;
 
+	private String email;
+
+	private boolean active;
+	private String roles;
+
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthday;
+
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public String getRoles() {
+		return roles;
+	}
+
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
 
 	public Long getId() {
 		return id;
@@ -34,6 +60,14 @@ public class User {
 
 	public String getUsername() {
 		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setUsername(String username) {
