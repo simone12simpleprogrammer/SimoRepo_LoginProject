@@ -1,61 +1,44 @@
 package it.dstech.annotationscustom.model;
-import javax.persistence.*;
-import javax.validation.constraints.Past;
+import java.time.LocalDate;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Set;
-
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "users")
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    private String username;
-    private String firstName;
-    public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	private String lastName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private Long id;
+	
+	private String username;
 	private String password;
 	private String email;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @Past
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate birthday;
-
-    @ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(
-			name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Collection < Role > roles;
-
-	public User() {}
 	
-	public User(String username, String password, String email, LocalDate birthday) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.birthday = birthday;
-	}
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "user_role",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+	
+	public User() {}
 	
 	public User(String username, String password, String email, LocalDate birthday, Set<Role> roles) {
 		super();
@@ -89,13 +72,12 @@ public class User {
 	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
-	public Collection < Role > getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection < Role > roles) {
-        this.roles = roles;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 	@Override
 	public int hashCode() {
