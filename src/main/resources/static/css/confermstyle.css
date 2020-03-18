@@ -1,0 +1,17 @@
+body{
+	margin-left:250px;
+	margin-right:250px;
+	background-color: lightpurple;
+	animation-iteration-count: infinite;
+  	animation-name: animation;
+    animation-duration: 20s;
+    text-align:center;
+}
+
+@keyframes animation {
+  0% {background-color: purple;}
+  25% {background-color: lightyellow;}
+  50% {background-color: gray;}
+  75% {background-color: lightgreen;}
+  100% {background-color: orange;}
+}

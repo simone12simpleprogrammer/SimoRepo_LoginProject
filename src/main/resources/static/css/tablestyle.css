@@ -1,0 +1,45 @@
+body{
+	background-color: lightpurple;
+    text-align:center;
+}
+
+form{
+	border: 1px solid black;
+  	border-collapse: collapse;
+  	text-align:center;
+  	font-family:monospace;
+}
+
+table{
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align:center;
+  font-family:monospace;
+  font-size:25px;
+  padding:0px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  width:100%;
+  margin-top:8%;
+} 
+
+table td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-size:20px;
+
+}
+table tr:nth-child(even){
+  background-color: lightgreen;
+}
+
+table tr:nth-child(odd){
+  background-color: lightgray;
+}
+
+table th{
+  background-color:lightblue;
+  border-bottom:3px solid black;
+  text-transform: uppercase;
+}
