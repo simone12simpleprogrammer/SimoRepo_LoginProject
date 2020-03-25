@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,10 +29,22 @@ public class User {
 	private String username;
 	private String password;
 	private String email;
+	
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate birthday;
 	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Immagine> immagini;
+	
+	public Set<Immagine> getImmagini() {
+		return immagini;
+	}
+
+	public void setImmagini(Set<Immagine> immagini) {
+		this.immagini = immagini;
+	}
+
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(name = "user_role",
 			joinColumns = @JoinColumn(name = "user_id"),

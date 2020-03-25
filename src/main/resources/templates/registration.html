@@ -72,13 +72,23 @@
 					</h2>
 
 				</form>
+
+				<form th:action="@{image}" method="post">
+					<label for="file">Seleziona una immagine:</label> <input
+						type="file" id="file" name="file">
+					<button></button>
+				</form>
+
+
 				<form th:action="@{/}" method="get">
-					<button class="btn btn-lg btn-primary btn-block" style="background-color:green" type="Submit">Return
-						To Login Page</button>
+					<button class="btn btn-lg btn-primary btn-block"
+						style="background-color: green" type="Submit">Return To
+						Login Page</button>
 				</form>
 			</div>
 		</div>
 	</div>
+
 
 </body>
 </html>

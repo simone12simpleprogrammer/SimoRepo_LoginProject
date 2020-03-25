@@ -1,10 +1,15 @@
 package it.dstech.annotationscustom.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Immagine {
@@ -19,6 +24,10 @@ public class Immagine {
 
 	@Lob
 	private byte[] data;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private User user;
 
 	public Immagine() {
 
@@ -37,7 +46,14 @@ public class Immagine {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	public User getUser() {
+		return user;
+	}
 
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public String getFileName() {
 		return fileName;
 	}
