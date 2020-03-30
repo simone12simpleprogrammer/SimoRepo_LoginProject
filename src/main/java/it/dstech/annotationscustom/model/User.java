@@ -1,137 +1,97 @@
 package it.dstech.annotationscustom.model;
-import java.time.LocalDate;
-import java.util.Set;
+
+import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import it.dstech.annotationscustom.model.Role;
 
 @Entity
-@Table(name = "users")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "user_id")
-	private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private Long id;
+    
+    private String email;
+    private String password;
 	
-	private String username;
-	private String password;
-	private String email;
+	// Upload files. 
+	@Lob
+	private byte[] image;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Collection<Role> roles;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_tasks",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "task_id"))
+    private List<Task> tasks;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 	
-	@JsonFormat(pattern = "dd-MM-yyyy")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private LocalDate birthday;
+	public byte[] getImage() {
+		return image;
+	}
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Immagine> immagini;
-	
-	public Set<Immagine> getImmagini() {
-		return immagini;
+	public void setImage(byte[] image) {
+		this.image= image;
 	}
 
-	public void setImmagini(Set<Immagine> immagini) {
-		this.immagini = immagini;
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
+
+	public List<Task> getTasks() {
+		return tasks;
 	}
 
-	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(name = "user_role",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}	
+    
+    
 	
-	public User() {}
-	
-	public User(String username, String password, String email, LocalDate birthday, Set<Role> roles) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.birthday = birthday;
-		this.roles = roles;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public LocalDate getBirthday() {
-		return birthday;
-	}
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
-	public Set<Role> getRoles() {
-		return roles;
-	}
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((birthday == null) ? 0 : birthday.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (birthday == null) {
-			if (other.birthday != null)
-				return false;
-		} else if (!birthday.equals(other.birthday))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
 }

@@ -1,67 +1,56 @@
 package it.dstech.annotationscustom.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
-
-
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "task")
-public class Task {
-
-    public Task(String description) {
-        this.description = description;
-    }
+public class Task implements Runnable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "task_id")
-    private Integer id;
+    private Long id;
 
-	@Column(name = "description")
-    @NotEmpty(message = "*Please provide your task")
-    private String description;
+    private String taskTitle;
+	
+	private String type;
+	
+	private String description;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDateTime expiredDate;
+	
+	private boolean isCarryOut;
     
-    @Column(name = "created_date")
-    private Date createdDate;
-    
-    @Column(name = "due_date")
-    private Date dueDate;
-    
-    @Column(name = "priority")
-    private int priority;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-    
-    
-    public Task() {
-    	
-    }
-    public Task(@NotEmpty(message = "*Please provide your task") String description, Date createdDate, Date dueDate,
-			int priority, User user) {
-		super();
-		this.description = description;
-		this.createdDate = createdDate;
-		this.dueDate = dueDate;
-		this.priority = priority;
-		this.user = user;
+	public Long getId() {
+		return id;
 	}
 
-	public Integer getId() {
-		return id;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTaskTitle() {
+		return taskTitle;
+	}
+
+	public void setTaskTitle(String taskTitle) {
+		this.taskTitle = taskTitle;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getDescription() {
@@ -72,35 +61,24 @@ public class Task {
 		this.description = description;
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public LocalDateTime getExpiredDate() {
+		return expiredDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public void setExpiredDate(LocalDateTime expiredDate) {
+		this.expiredDate = expiredDate;
 	}
 
-	public Date getDueDate() {
-		return dueDate;
+	public boolean isCarryOut() {
+		return isCarryOut;
 	}
 
-	public void setDueDate(Date dueDate) {
-		this.dueDate = dueDate;
+	public void setCarryOut(boolean isCarryOut) {
+		this.isCarryOut = isCarryOut;
 	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
+   
+	@Override
+	public void run() {
+		System.out.println("prova");
 	}
 }

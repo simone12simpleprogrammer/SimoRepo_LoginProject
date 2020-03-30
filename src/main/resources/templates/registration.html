@@ -4,91 +4,33 @@
 <head>
 <title>Registration Form</title>
 <link rel="stylesheet" type="text/css"
-	th:href="@{/css/registration.css}" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	th:href="@{/webjars/bootstrap/4.4.1-1/css/bootstrap.min.css}" />
 </head>
 <body>
 
-
-	<div class="container">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" class="form-horizontal"
-					role="form">
-					<h2>Registration Form</h2>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label for="username">Username:</label> <input type="text"
-								th:field="*{username}" placeholder="insert username"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label for="password">Password:</label> <input type="password"
-								th:field="*{password}" placeholder="insert password"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label for="email">Email:</label> <input type="text"
-								th:field="*{email}" placeholder="insert email"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-9">
-							<label for="birthday">Birthday:</label> <input type="date"
-								th:field="*{birthday}" placeholder="insert birthday"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"
-								class="validation-message"></label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Register
-								User</button>
-						</div>
-					</div>
-
-					<h2>
-						<span class="text-success" th:utext="${successMessage}"></span>
-					</h2>
-
-				</form>
-
-				<form th:action="@{image}" method="post">
-					<label for="file">Seleziona una immagine:</label> <input
-						type="file" id="file" name="file">
-					<button></button>
-				</form>
+	<a th:href="@{/}"><button class="btn btn-md btn-warning btn-block"
+			type="Submit">Go To Login Page</button></a>
 
 
-				<form th:action="@{/}" method="get">
-					<button class="btn btn-lg btn-primary btn-block"
-						style="background-color: green" type="Submit">Return To
-						Login Page</button>
-				</form>
-			</div>
-		</div>
-	</div>
+	<form autocomplete="off" action="#" th:action="@{/registration}" th:object="${user}" method="post" class="form-horizontal">
+		<h2>Registration Form</h2>
 
+		<input type="text" th:field="*{email}" placeholder="Email" class="form-control" /> 
+		<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label> 
+		<input type="password" th:field="*{password}" placeholder="Password" class="form-control" /> 
+		<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label> 
+		<input id="image" class="form-control" type="file" th:field="*{image}" /> 
+		<label th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="validation-message"> Profile picture</label>
+
+		<input type="submit" value="Register User" />
+		<h2>
+			<span class="text-success" th:utext="${successMessage}"></span>
+		</h2>
+
+	</form>
+
+	<script type="text/javascript" th:src="@{webjars/jquery/3.4.1/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
 
 </body>
 </html>
