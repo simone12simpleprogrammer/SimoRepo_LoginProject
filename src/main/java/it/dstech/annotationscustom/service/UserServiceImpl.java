@@ -1,4 +1,5 @@
 package it.dstech.annotationscustom.service;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -51,7 +52,12 @@ public class UserServiceImpl implements UserService {
 	    User user = new User();
 	    user.setEmail(registration.getEmail()); 
 	    user.setPassword(passwordEncoder.encode(registration.getPassword()));
-	    user.setImage(registration.getImage());
+	    try {
+			user.setImage(registration.getImage().getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	    user.setRoles(Arrays.asList(new Role("USER")));
 	    return userRepository.save(user);
 	}

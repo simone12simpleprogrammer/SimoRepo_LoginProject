@@ -19,7 +19,6 @@
 		<h1 th:text="'Welcome, ' + ${authUser} + '!'">Welcome!</h1>
 		<!-- ASK FOR QUESTION -->
 		<img class="rounded-circle" th:src="${authUserImage} == null ? _ : @{'data:image/png;base64,'+${authUserImage}}">
-
 		<h2>Task Form</h2>
 
 		<form action="#" th:action="@{/save}" th:object="${task}" method="post">
